@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft } from "lucide-react";
 
 export default function StudentProfilePage() {
   const { id } = useParams();
@@ -116,135 +117,150 @@ export default function StudentProfilePage() {
   if (!student) return <StudentProfileSkeleton />;
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle>Student Profile</CardTitle>
-        <CardDescription>View and manage student information</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {!isEditing ? (
-          <div className="space-y-2">
-            <p>
-              <strong>Name:</strong> {student.name}
-            </p>
-            <p>
-              <strong>Cohort:</strong> {student.cohort}
-            </p>
-            <p>
-              <strong>Courses:</strong> {student.courses.join(", ")}
-            </p>
-            <p>
-              <strong>Date Joined:</strong> {student.dateJoined}
-            </p>
-            <p>
-              <strong>Last Login:</strong> {student.lastLogin}
-            </p>
-            <p>
-              <strong>Status:</strong> {student.status}
-            </p>
-          </div>
-        ) : (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleUpdate();
-            }}
-            className="space-y-4"
-          >
+    <main className="w-full h-screen flex items-center justify-center">
+      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60 z-[-1]" />
+      <ArrowLeft
+        className="absolute top-4 left-4 h-8 w-8 text-white cursor-pointer"
+        onClick={() => router.push("/dashboard")}
+      />
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>Student Profile</CardTitle>
+          <CardDescription>View and manage student information</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {!isEditing ? (
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                value={formData?.name || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
+              <p>
+                <strong>Name:</strong> {student.name}
+              </p>
+              <p>
+                <strong>Cohort:</strong> {student.cohort}
+              </p>
+              <p>
+                <strong>Courses:</strong> {student.courses.join(", ")}
+              </p>
+              <p>
+                <strong>Date Joined:</strong> {student.dateJoined}
+              </p>
+              <p>
+                <strong>Last Login:</strong> {student.lastLogin}
+              </p>
+              <p>
+                <strong>Status:</strong> {student.status}
+              </p>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="cohort">Cohort</Label>
-              <Input
-                id="cohort"
-                value={formData?.cohort || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, cohort: e.target.value })
-                }
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="courses">Courses</Label>
-              <Input
-                id="courses"
-                value={formData?.courses.join(", ") || ""}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    courses: e.target.value
-                      .split(",")
-                      .map((course) => course.trim()),
-                  })
-                }
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select
-                value={formData?.status || ""}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, status: value })
-                }
-              >
-                <SelectTrigger id="status">
-                  <SelectValue placeholder="Select a status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Active">Active</SelectItem>
-                  <SelectItem value="Inactive">Inactive</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </form>
-        )}
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        {!isEditing ? (
-          <>
-            <Button onClick={() => setIsEditing(true)}>Edit</Button>
-            <Button variant="destructive" onClick={handleDelete}>
-              Delete
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button onClick={handleUpdate}>Save</Button>
-            <Button variant="secondary" onClick={() => setIsEditing(false)}>
-              Cancel
-            </Button>
-          </>
-        )}
-      </CardFooter>
-    </Card>
+          ) : (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleUpdate();
+              }}
+              className="space-y-4"
+            >
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  value={formData?.name || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cohort">Cohort</Label>
+                <Input
+                  id="cohort"
+                  value={formData?.cohort || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, cohort: e.target.value })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="courses">Courses</Label>
+                <Input
+                  id="courses"
+                  value={formData?.courses.join(", ") || ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      courses: e.target.value
+                        .split(",")
+                        .map((course) => course.trim()),
+                    })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="status">Status</Label>
+                <Select
+                  value={formData?.status || ""}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, status: value })
+                  }
+                >
+                  <SelectTrigger id="status">
+                    <SelectValue placeholder="Select a status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Active">Active</SelectItem>
+                    <SelectItem value="Inactive">Inactive</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </form>
+          )}
+        </CardContent>
+        <CardFooter className="flex flex-row gap-4 justify-end">
+          {!isEditing ? (
+            <>
+              <Button onClick={() => setIsEditing(true)}>Edit</Button>
+              <Button variant="destructive" onClick={handleDelete}>
+                Delete
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button onClick={handleUpdate}>Save</Button>
+              <Button variant="secondary" onClick={() => setIsEditing(false)}>
+                Cancel
+              </Button>
+            </>
+          )}
+        </CardFooter>
+      </Card>
+    </main>
   );
 }
 
 function StudentProfileSkeleton() {
+  const router = useRouter();
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <Skeleton className="h-8 w-[200px]" />
-        <Skeleton className="h-4 w-[300px]" />
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-2">
-          {[...Array(6)].map((_, i) => (
-            <Skeleton key={i} className="h-4 w-full" />
-          ))}
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Skeleton className="h-10 w-[100px]" />
-        <Skeleton className="h-10 w-[100px]" />
-      </CardFooter>
-    </Card>
+    <main className="w-full h-screen flex items-center justify-center">
+      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60 z-[-1]" />
+      <ArrowLeft
+        className="absolute top-4 left-4 h-8 w-8 text-white cursor-pointer"
+        onClick={() => router.push("/dashboard")}
+      />
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <Skeleton className="h-8 w-[200px]" />
+          <Skeleton className="h-4 w-[300px]" />
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {[...Array(6)].map((_, i) => (
+              <Skeleton key={i} className="h-4 w-full" />
+            ))}
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Skeleton className="h-10 w-[100px]" />
+          <Skeleton className="h-10 w-[100px]" />
+        </CardFooter>
+      </Card>
+    </main>
   );
 }

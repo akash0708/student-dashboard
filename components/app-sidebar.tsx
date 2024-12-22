@@ -1,5 +1,4 @@
-import * as React from "react";
-
+"use client";
 import {
   Home,
   Users,
@@ -22,40 +21,9 @@ import {
 } from "@/components/ui/sidebar";
 import logo from "@/public/logo.png";
 import Image from "next/image";
-
-// This is sample data.
-// const navMain = [
-//   {
-//     title: "items",
-//     items: [
-//       {
-//         title: "Dashboard",
-//         url: "#",
-//       },
-//       {
-//         title: "Students",
-//         url: "#",
-//         isActive: true,
-//       },
-//       {
-//         title: "Chapter",
-//         url: "#",
-//       },
-//       {
-//         title: "Help",
-//         url: "#",
-//       },
-//       {
-//         title: "Reports",
-//         url: "#",
-//       },
-//       {
-//         title: "Settings",
-//         url: "#",
-//       },
-//     ],
-//   },
-// ];
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const navMain = [
   {
@@ -70,7 +38,6 @@ const navMain = [
         title: "Students",
         url: "/dashboard",
         icon: Users,
-        isActive: true,
       },
       {
         title: "Chapter",
@@ -97,6 +64,14 @@ const navMain = [
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [activeLink, setActiveLink] = useState<string>();
+
+  const pathName = usePathname();
+
+  useEffect(() => {
+    setActiveLink(pathName);
+  }, [pathName]);
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -108,30 +83,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarGroup key={item.title}>
             <SidebarGroupContent>
               <SidebarMenu>
-                {/* {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a
-                        href={item.url}
-                        className={item.isActive ? "font-bold" : ""}
-                      >
-                        {item.title}
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))} */}
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a
+                    <SidebarMenuButton
+                      asChild
+                      isActive={item.url === activeLink}
+                    >
+                      <Link
                         href={item.url}
                         className={`px-[18px] flex items-center gap-3 font-bold text-[16px] text-[#6F767E] ${
-                          item.isActive ? "font-extrabold text-black" : ""
+                          item.url === activeLink
+                            ? "font-extrabold text-black"
+                            : ""
                         }`}
                       >
                         <item.icon className="w-8 h-8" strokeWidth={3} />
                         {item.title}
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

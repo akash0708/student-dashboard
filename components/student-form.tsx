@@ -107,13 +107,13 @@ export function AddStudentFormDialog() {
         <Button
           variant="secondary"
           size="lg"
-          className="text-[#3F526E] font-semibold text-base"
+          className="text-[#3F526E] hover:bg-[#3f526e57] font-semibold text-base"
         >
           <Plus className="mr-1 h-8 w-8" strokeWidth={3} />
           Add new Student
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[550px]">
         <DialogHeader>
           <DialogTitle>Add New Student</DialogTitle>
         </DialogHeader>
@@ -153,7 +153,7 @@ export function AddStudentFormDialog() {
                   control={form.control}
                   name={`courses.${index}`}
                   render={({ field }) => (
-                    <FormItem className="flex items-center space-x-2 mt-2">
+                    <FormItem className="flex flex-row items-center space-x-2">
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -173,7 +173,7 @@ export function AddStudentFormDialog() {
                 type="button"
                 variant="outline"
                 size="sm"
-                className="mt-2"
+                className="mt-2 block"
                 onClick={() => append("")}
               >
                 Add Course
@@ -189,7 +189,7 @@ export function AddStudentFormDialog() {
                 <FormItem>
                   <FormLabel>Date Joined</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input type="date" {...field} className="text-gray-500" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -202,7 +202,11 @@ export function AddStudentFormDialog() {
                 <FormItem>
                   <FormLabel>Last Login</FormLabel>
                   <FormControl>
-                    <Input type="datetime-local" {...field} />
+                    <Input
+                      type="datetime-local"
+                      {...field}
+                      className="text-gray-600"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
