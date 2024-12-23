@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Here’s a detailed README for your Student Dashboard project:
 
-## Getting Started
+---
 
-First, run the development server:
+# Student Dashboard
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The **Student Dashboard** is a feature-rich full-stack application designed for managing student information. It is implemented as a pixel-perfect rendition of a Figma design, utilizing cutting-edge technologies like Next.js, Shadcn, and TailwindCSS. This application supports login, adding, removing, updating, and viewing student data with a focus on mobile responsiveness and a seamless user experience.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📋 Features
 
-## Learn More
+- **Pixel-Perfect Design**  
+  Based on a Figma design and implemented using Next.js, TailwindCSS, and Shadcn.
 
-To learn more about Next.js, take a look at the following resources:
+- **Full-Stack Functionality**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - User authentication (Login).
+  - Add, update, delete, and view student records.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Mobile Responsive**  
+  Fully optimized for various screen sizes and devices.
 
-## Deploy on Vercel
+- **State Management**  
+  Utilizes Zustand for state management, ensuring a performant and intuitive experience.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Validation**  
+  Zod and React Hook Form ensure robust client-side validation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Database and ORM**
+
+  - **Prisma** for efficient database interactions.
+  - **PostgreSQL** database hosted on Supabase.
+
+- **Deployment**  
+  Hosted on Vercel for production-ready performance.
+
+---
+
+## 🌐 Live Demo
+
+Check out the live project here: [Student Dashboard Live](https://student-dashboard-gamma.vercel.app/)
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology          | Purpose                       |
+| ------------------- | ----------------------------- |
+| **Next.js**         | Frontend framework            |
+| **TailwindCSS**     | Styling                       |
+| **Shadcn**          | UI components                 |
+| **TypeScript**      | Type-safe development         |
+| **Prisma**          | ORM for database interactions |
+| **PostgreSQL**      | Relational database           |
+| **Supabase**        | Database hosting              |
+| **Zustand**         | State management              |
+| **Zod**             | Schema validation             |
+| **React Hook Form** | Form management               |
+| **Vercel**          | Deployment                    |
+
+---
+
+## ⚙️ Installation and Setup
+
+### Prerequisites
+
+- Node.js (v16 or later)
+- pnpm (Package manager)
+- PostgreSQL database
+
+### Steps to Run Locally
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/akash0708/student-dashboard.git
+   cd student-dashboard
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Setup environment variables**  
+   Create a `.env` file in the root directory with the following:
+
+   ```env
+   DATABASE_URL="your-supabase-url"
+   DIRECT_URL="your-supabase-direct-url"
+   ```
+
+4. **Run Prisma migrations**
+
+   ```bash
+   pnpm prisma migrate dev
+   ```
+
+5. **Start the development server**
+
+   ```bash
+   pnpm dev
+   ```
+
+6. **Access the application**  
+   Open your browser and navigate to `http://localhost:3000`.
+
+---
+
+## 🧪 Testing
+
+This project includes robust validation using Zod. Future iterations may include test suites using Vitest or Jest for unit and integration testing.
+
+---

@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 
-export const loginSchema = z.object({
+const loginSchema = z.object({
   username: z.string().nonempty("Name is required"),
   password: z.string().nonempty("Password is required"),
 });

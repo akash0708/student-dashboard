@@ -1,6 +1,10 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SearchForm } from "@/components/search-form";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { Bell, HelpCircle, MessageSquareMore, Settings2 } from "lucide-react";
 import Image from "next/image";
 
@@ -11,6 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SidebarInset className="bg-[#F6F8FA]">
         <header className="flex h-20 shrink-0 items-center gap-2 px-2">
           <div className="w-full flex items-center justify-between gap-4">
+            {/* <SidebarTrigger className="block sm:hidden" /> */}
             <SearchForm className="w-full sm:w-[55%]" />
 
             <div className="w-2/5 pr-5 text-[#808281] hidden sm:block">

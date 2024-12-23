@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/sidebar";
 import logo from "@/public/logo.png";
 import Image from "next/image";
-// import Link from "next/link";
 import { Link } from "next-view-transitions";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
