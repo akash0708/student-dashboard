@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -30,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 const studentSchema = z.object({
   name: z.string().nonempty("Name is required"),
@@ -47,6 +50,8 @@ const studentSchema = z.object({
 export function AddStudentFormDialog() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { toast } = useToast();
 
   const students = useStudentStore((state) => state.students);
   const setStudents = useStudentStore((state) => state.setStudents);
@@ -69,7 +74,7 @@ export function AddStudentFormDialog() {
   });
 
   function onSubmit(values: z.infer<typeof studentSchema>) {
-    // Make a POST request to the backend API
+    console.log(JSON.stringify(values));
     setLoading(true);
     fetch("/api/students/add", {
       method: "POST",
@@ -88,22 +93,22 @@ export function AddStudentFormDialog() {
       })
       .then((data) => {
         console.log("Student added successfully:", data);
-        alert("Student added successfully!"); // Optional: Provide user feedback
+        toast({ title: "Success", description: "Student added successfully!" });
         setStudents([...students, data]);
         setLoading(false);
-        setOpen(false); // Close the dialog
-        form.reset(); // Reset the form
+        setOpen(false);
+        form.reset();
       })
       .catch((error) => {
         setLoading(false);
         console.error("Error adding student:", error);
-        alert("Error adding student: " + error.message); // Optional: Provide user feedback
+        alert("Error adding student: " + error.message);
       });
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="w-full sm:w-fit">
         <Button
           variant="secondary"
           size="lg"

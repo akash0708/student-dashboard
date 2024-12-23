@@ -49,10 +49,19 @@ export default function Page() {
     fetchStudents();
   }, [setStudents]);
 
+  const filteredStudents = students.filter((student) => {
+    const matchesCohort = cohort ? student.cohort === cohort : true;
+    const matchesClass = classFilter
+      ? student.courses.some((course: string) => course.includes(classFilter))
+      : true;
+
+    return matchesCohort && matchesClass;
+  });
+
   return (
     <>
-      <div className="fliters flex flex-row justify-between items-center">
-        <div className="flex flex-row gap-4">
+      <div className="fliters flex flex-col sm:flex-row justify-stretch sm:justify-between items-center gap-4 sm:gap-0">
+        <div className="flex flex-row gap-4 w-full sm:w-fit">
           <Select value={cohort} onValueChange={setCohort}>
             <SelectTrigger className="w-[150px] bg-[#E9EDF1] font-bold text-[#3F526E]">
               <SelectValue placeholder="Cohort" />
@@ -77,7 +86,7 @@ export default function Page() {
 
         <AddStudentFormDialog />
       </div>
-      <Table className="mt-4 text-sm">
+      <Table className="mt-4 text-sm w-full">
         <TableHeader>
           <TableRow>
             <TableHead>Student Name</TableHead>
@@ -89,53 +98,50 @@ export default function Page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {students
-            .filter((student) => student.cohort === cohort)
-            .filter((student) =>
-              student.courses.some((course: string) =>
-                course.includes(classFilter)
-              )
-            )
-            .map((student, index) => (
-              <TableRow
-                key={index}
-                className="cursor-pointer"
-                onClick={() => router.push(`/students/${student.id}`)}
-              >
-                <TableCell>{student.name}</TableCell>
-                <TableCell>{student.cohort}</TableCell>
-                <TableCell>
-                  <div className="flex flex-wrap gap-2">
-                    {student.courses.map((course, idx) => (
-                      <div
-                        key={idx}
-                        className="flex flex-row justify-center items-center gap- rounded-md bg-[#F6F8FA] px-2 py-2 text-sm font-medium text-black"
-                      >
-                        <Image
-                          src="/student.png"
-                          alt="dummy"
-                          width={28}
-                          height={28}
-                          className="w-7 h-7 rounded-md inline-block mr-2"
-                        />
-                        {course}
-                      </div>
-                    ))}
-                  </div>
-                </TableCell>
-                <TableCell>{formatCustomDate(student.lastLogin)}</TableCell>
-                <TableCell>{formatCustomDate(student.lastLogin)}</TableCell>
-                <TableCell>
-                  <div
-                    className={`h-3 w-3 ml-4 rounded-full ${
-                      student.status === "Active"
-                        ? "bg-green-500"
-                        : "bg-red-500"
-                    }`}
-                  ></div>
-                </TableCell>
-              </TableRow>
-            ))}
+          {filteredStudents.map((student, index) => (
+            <TableRow
+              key={index}
+              className="cursor-pointer"
+              onClick={() => router.push(`/students/${student.id}`)}
+            >
+              <TableCell>{student.name}</TableCell>
+              <TableCell>
+                <div className="w-20">{student.cohort}</div>
+              </TableCell>
+              <TableCell>
+                <div className="flex flex-wrap gap-2">
+                  {student.courses.map((course, idx) => (
+                    <div
+                      key={idx}
+                      className="min-w-28 flex flex-row justify-center items-center rounded-md bg-[#F6F8FA] px-2 py-2 text-sm font-medium text-black"
+                    >
+                      <Image
+                        src="/student.png"
+                        alt="dummy"
+                        width={28}
+                        height={28}
+                        className="w-7 h-7 rounded-md inline-block mr-2"
+                      />
+                      {course}
+                    </div>
+                  ))}
+                </div>
+              </TableCell>
+              <TableCell className="w-56">
+                {formatCustomDate(student.lastLogin)}
+              </TableCell>
+              <TableCell className="w-56">
+                {formatCustomDate(student.lastLogin)}
+              </TableCell>
+              <TableCell>
+                <div
+                  className={`h-3 w-3 ml-4 rounded-full ${
+                    student.status === "Active" ? "bg-green-500" : "bg-red-500"
+                  }`}
+                ></div>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </>

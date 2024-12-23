@@ -14,8 +14,11 @@ interface StudentStore {
   students: Student[];
   setStudents: (students: Student[]) => void;
   addStudent: (student: Student) => void;
-  updateStudent: (id: string, updatedData: Partial<Student>) => void;
-  removeStudent: (id: string) => void;
+  updateStudent: (
+    id: string | string[] | undefined,
+    updatedData: Partial<Student>
+  ) => void;
+  removeStudent: (id: string | string[] | undefined) => void;
 }
 
 export const useStudentStore = create<StudentStore>((set) => ({
