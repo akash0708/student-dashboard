@@ -1,10 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SearchForm } from "@/components/search-form";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Bell, HelpCircle, MessageSquareMore, Settings2 } from "lucide-react";
 import Image from "next/image";
 
