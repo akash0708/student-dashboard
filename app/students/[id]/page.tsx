@@ -125,7 +125,7 @@ export default function StudentProfilePage() {
         className="absolute top-4 left-4 h-8 w-8 text-white cursor-pointer"
         onClick={() => router.push("/dashboard")}
       />
-      <Card className="w-full max-w-2xl mx-auto">
+      <Card className="w-full h-full sm:h-fit max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Student Profile</CardTitle>
           <CardDescription>View and manage student information</CardDescription>

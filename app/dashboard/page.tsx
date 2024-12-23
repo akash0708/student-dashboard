@@ -63,7 +63,7 @@ export default function Page() {
       <div className="fliters flex flex-col sm:flex-row justify-stretch sm:justify-between items-center gap-4 sm:gap-0">
         <div className="flex flex-row gap-4 w-full sm:w-fit">
           <Select value={cohort} onValueChange={setCohort}>
-            <SelectTrigger className="w-[150px] bg-[#E9EDF1] font-bold text-[#3F526E]">
+            <SelectTrigger className="w-1/2 sm:w-[150px] bg-[#E9EDF1] font-bold text-[#3F526E]">
               <SelectValue placeholder="Cohort" />
             </SelectTrigger>
             <SelectContent>
@@ -74,7 +74,7 @@ export default function Page() {
           </Select>
 
           <Select value={classFilter} onValueChange={setClass}>
-            <SelectTrigger className="w-[150px] bg-[#E9EDF1] font-bold text-[#3F526E]">
+            <SelectTrigger className="w-1/2 sm:w-[150px] bg-[#E9EDF1] font-bold text-[#3F526E]">
               <SelectValue placeholder="Class" />
             </SelectTrigger>
             <SelectContent>
@@ -86,7 +86,9 @@ export default function Page() {
 
         <AddStudentFormDialog />
       </div>
-      <Table className="mt-4 text-sm w-full">
+
+      {/* <div className="w-fit"> */}
+      <Table className="mt-4 text-sm">
         <TableHeader>
           <TableRow>
             <TableHead>Student Name</TableHead>
@@ -144,6 +146,7 @@ export default function Page() {
           ))}
         </TableBody>
       </Table>
+      {/* </div> */}
     </>
   );
 }

@@ -37,9 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 px-4">
-          <div className="min-h-fit flex-1 rounded-xl bg-white md:min-h-min p-4">
-            {children}
-          </div>
+          <div className="bg-white p-4">{children}</div>
         </main>
       </SidebarInset>
     </SidebarProvider>

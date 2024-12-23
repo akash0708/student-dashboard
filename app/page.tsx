@@ -1,24 +1,62 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
+
+export const loginSchema = z.object({
+  username: z.string().nonempty("Name is required"),
+  password: z.string().nonempty("Password is required"),
+});
+
+type LoginSchema = z.infer<typeof loginSchema>;
 
 const Home = () => {
   const router = useRouter();
 
-  const handleLogin = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second
-    router.push("/dashboard");
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
+    // post to /api/login
+    try {
+      const result = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(data);
+      if (result.ok) {
+        router.push("/dashboard");
+      } else {
+        throw new Error("Failed to login");
+      }
+    } catch (error) {
+      form.setError("username", {
+        message: "Username already taken",
+      });
+      console.log("Error adding user:", error);
+    }
   };
 
   return (
@@ -26,8 +64,9 @@ const Home = () => {
       <div className="w-1/2 hidden sm:flex items-center justify-center bg-gray-200 p-4">
         <div className="w-full h-full flex flex-col items-center justify-center">
           <h1 className="text-4xl font-bold">Welcome to our app</h1>
-          <p className="text-lg mt-4 text-center">
-            Press on the login button to access the dashboard
+          <p className="text-lg mt-4 max-w-xl text-center">
+            Enter your username and password. Press on the login button to
+            access the dashboard
           </p>
         </div>
       </div>
@@ -38,24 +77,47 @@ const Home = () => {
             <CardTitle className="text-2xl">Login</CardTitle>
           </CardHeader>
           <CardContent>
-            <form>
-              <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="john@gmail.com" />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" placeholder="Password" />
-                </div>
-              </div>
-            </form>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Username</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input placeholder="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting ? "Submitting" : "Submit"}
+                </Button>
+              </form>
+            </Form>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button onClick={handleLogin} className="w-full">
-              Login
-            </Button>
-          </CardFooter>
         </Card>
       </div>
     </div>

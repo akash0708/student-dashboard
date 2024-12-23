@@ -25,11 +25,17 @@ model Student {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  @@map("students") // Optional: Custom table name
+  @@map("students")
 }
 
-// Enum for status
 enum Status {
   Active
   Inactive
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  password  String
+  createdAt DateTime @default(now())
 }

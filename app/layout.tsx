@@ -3,6 +3,7 @@ import { Noto_Sans, Noto_Sans_Mono } from "next/font/google";
 
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ViewTransitions } from "next-view-transitions";
 
 const notoSansMono = Noto_Sans_Mono({
   variable: "--font-noto-sans-mono",
@@ -25,13 +26,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${notoSans.variable} ${notoSansMono.variable} ${notoSans.className} antialiased`}
-      >
-        {children}
-        <Toaster />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body
+          className={`${notoSans.variable} ${notoSansMono.variable} ${notoSans.className} antialiased`}
+        >
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
